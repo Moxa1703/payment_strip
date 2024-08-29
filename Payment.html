@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+            .form-container h2 {
+                margin-bottom: 20px;
+                font-size: 1.5em;
+            }
+
+            .form-container label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+            }
+
+            .form-container input {
+                width: calc(100% - 22px);
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .form-container button {
+                width: 100%;
+                padding: 10px;
+                background-color: #28a745;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                font-size: 1em;
+                cursor: pointer;
+            }
+
+                .form-container button:hover {
+                    background-color: #218838;
+                }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Payment Information</h2>
+        <form id="payment-form">
+            <label for="firstname">What is your first name?</label>
+            <input type="text" id="firstname" name="firstname" required>
+
+            <label for="lastname">What is your last name?</label>
+            <input type="text" id="lastname" name="lastname" required>
+
+            <label for="email">What is your email?</label>
+            <input type="email" id="email" name="email" required>
+
+            <button type="button" onclick="processPayment()">Payment</button>
+        </form>
+    </div>
+
+    <script>
+        function processPayment() {
+            // Get form values
+            const firstname = document.getElementById('firstname').value;
+            const lastname = document.getElementById('lastname').value;
+            const email = document.getElementById('email').value;
+
+            // Simple validation (optional)
+            if (!firstname || !lastname || !email) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            // Example payment processing logic
+            alert(`Processing payment for ${firstname} ${lastname} (${email})`);
+// WARNING: For POST requests, body is set to null by browsers.
+var data = JSON.stringify({
+  "attendees": [
+    {
+      "attendeeSessions": [],
+      "autoRegister": false,
+      "email": "test@gmail.com",
+      "firstName": "testMoxa",
+      "lastName": "M",
+      "passId": "b1d88b28-3d0d-ef11-9f89-002248206fd8",
+      "responses": null,
+      "waitlisted": false
+    }
+  ],
+  "eventId": "WRMC2024",
+  "purchaseId": "831a1bca-1cd0-42f0-ba55-1ab22579f93e"
+});
+
+var xhr = new XMLHttpRequest();
+//xhr.withCredentials = true;
+debugger;
+xhr.addEventListener("readystatechange", function() {
+  if(this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://createstripecheckoutsession-test.azurewebsites.net/api/CreateSession?code=35zAbBVTmj9bII151L3CoBJ3vMzsLQKQ6G63PMpcQYoIAzFuONWp-g%3D%3D");
+xhr.setRequestHeader("Content-Type","application/json"); 
+xhr.setRequestHeader('Access-Control-Allow-Origin','*');               
+xhr.setRequestHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');                 
+xhr.setRequestHeader('Access-Control-Allow-Headers','Content-Type'); 
+
+xhr.send(data);
+
+            // You can add actual payment processing code here, e.g., sending data to a server
+
+            // Optionally, you can submit the form if required
+            // document.getElementById('payment-form').submit();
+        }
+    </script>
+</body>
+</html>
